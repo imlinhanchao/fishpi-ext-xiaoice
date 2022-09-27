@@ -21,8 +21,10 @@ function activate(context, electron) {
 }
 
 function login(context) {
-    let iconPath = path.join(__dirname, "..", "public", "icon.png");
-    let HtmlPath = path.join(__dirname, "..", "dist", "index.html");
-    context.setSidebar(iconPath, HtmlPath);
+    let iconPath = path.join(__dirname, "..", "public", "icon.svg");
+    let Url = process.env.NODE_ENV == 'development' ? 
+        "http://127.0.0.1:8080" :
+        path.join(__dirname, "..", "dist", "index.html");
+    context.setSidebar(iconPath, Url);
 }
 module.exports = { activate }

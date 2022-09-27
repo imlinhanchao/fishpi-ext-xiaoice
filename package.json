@@ -2,7 +2,7 @@
   "name": "xiaoice",
   "publisher": "hancel",
   "version": "0.1.0",
-  "description": "????",
+  "description": "小冰游戏",
   "private": true,
   "main": "extension/index.js",
   "scripts": {
