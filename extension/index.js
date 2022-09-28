@@ -15,8 +15,11 @@ function activate(context, electron) {
         console.dir('app was quit')
     })
 
-    context.on('command', (command, args) => {
-        
+    context.on('command', async (command, args, callback) => {
+        console.log(command)
+        console.log(args);
+        let rsp = await context.fishpi.account.info();
+        callback(rsp.data);
     })
 }
 
