@@ -10,7 +10,13 @@ new Vue({
   router,
   store,
   data: {
-    info: null
+    info: null,
+    cookies: localStorage.getItem("cks") || {
+
+    }
+  },
+  mounted() {
+    
   },
   render: h => h(App)
 }).$mount('#app')
