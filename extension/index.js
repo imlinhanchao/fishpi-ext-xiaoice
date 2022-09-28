@@ -19,6 +19,7 @@ function activate(context, electron) {
         console.log(command)
         console.log(args);
         let rsp = await context.fishpi.account.info();
+        console.dir(rsp)
         callback(rsp.data);
     })
 }

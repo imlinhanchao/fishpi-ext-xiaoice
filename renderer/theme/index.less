@@ -9,23 +9,34 @@ body {
     }
 }
 
+a {
+    color: inherit;
+    border-bottom: 1px dashed var(--main-chatroom-message-color);
+    text-decoration: none;
+}
+
 .form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
     .form-item {
         display: flex;
         justify-content: center;
-        box-shadow: 0px 0px 10px var(--global-control-focus-color);
+        box-shadow: 0px 0px 8px var(--global-control-focus-color);
         .form-icon {
-            width: 25px;
-            height: 25px;
-            line-height: 25px;
+            width: 30px;
+            height: 30px;
+            line-height: 30px;
             vertical-align: middle;
             color: #FFF;
             background-color: var(--global-background-color);
             text-align: center;
         }
         .form-input {
-            height: 25px;
-            line-height: 25px;
+            padding: 5px;
+            height: 30px;
+            line-height: 30px;
             border: 1px solid var(--global-background-color);
             &:focus {
                 outline: 0;
@@ -37,7 +48,7 @@ body {
             background-color: var(--global-background-color);
         }
         .form-submit-append {
-
+            width: 30px;
         }
     }
 }
