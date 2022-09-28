@@ -11,12 +11,10 @@ new Vue({
   store,
   data: {
     info: null,
-    cookies: localStorage.getItem("cks") || {
-
-    }
+    cookies: JSON.parse(localStorage.getItem("cks") ||'{}')
   },
   mounted() {
-    
+
   },
   render: h => h(App)
 }).$mount('#app')

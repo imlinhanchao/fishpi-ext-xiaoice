@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" v-if="$root.info">
     <router-view/>
   </div>
 </template>
@@ -9,7 +9,6 @@ export default {
   async mounted() {
     let info = await parent.$webviewIpc.send('fishpi.info.get');
     this.$root.info = info;
-    if (!this.$root.cookies[info.oId]) this.$router.replace('login');
   }
 }
 </script>
