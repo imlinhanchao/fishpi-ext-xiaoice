@@ -45,7 +45,7 @@ export default {
   computed: {
     ck() {
       return this.$root.cookies[this.$root.info.oId] ? this.$root.cookies[this.$root.info.oId].ck : null;
-    }
+    },
   },
   mounted() {
     this.Init()
@@ -71,7 +71,7 @@ export default {
           that.pushMessage(e)
       }
       this.rws.onerror = (e) => {
-          console.log('rws error', e.message);
+          console.log('websocket error', e.message);
       }
       this.rws.onclose = (e) => {
         console.dir(e)
@@ -82,10 +82,10 @@ export default {
       let msg = JSON.parse(e.data);
       switch(msg.type) {
         case 'setCK':       
-          this.$root.cookies[this.$root.info.oId] = {
+          this.$set(this.$root.cookies, this.$root.info.oId, {
             ck: msg.ck,
             passwd: this.passwd
-          }
+          });
           localStorage.setItem('cks', JSON.stringify(this.$root.cookies));
           this.messages = [];
           this.messages.push(msg);
