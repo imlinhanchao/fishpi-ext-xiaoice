@@ -2,9 +2,11 @@
   "name": "xiaoice",
   "publisher": "hancel",
   "version": "0.1.0",
-  "description": "小冰游戏",
+  "displayName": "小冰游戏",
+  "description": "摸鱼文字修仙游戏",
   "private": true,
   "main": "extension/index.js",
+  "author": "Hancel.Lin",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
