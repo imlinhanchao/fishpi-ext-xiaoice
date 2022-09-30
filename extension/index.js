@@ -16,11 +16,15 @@ function activate(context, electron) {
     })
 
     context.on('command', async (command, args, callback) => {
-        console.log(command)
-        console.log(args);
-        let rsp = await context.fishpi.account.info();
-        console.dir(rsp)
-        callback(rsp.data);
+        switch(command) {
+            case 'fishpi.info.get':
+            {
+                let rsp = await context.fishpi.account.info();
+                console.dir(rsp)
+                callback(rsp.data);
+                break;
+            }
+        }
     })
 }
 

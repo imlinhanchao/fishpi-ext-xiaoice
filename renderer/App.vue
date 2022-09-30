@@ -7,7 +7,8 @@
 <script>
 export default {
   async mounted() {
-    let info = await parent.$webviewIpc.send('fishpi.info.get');
+    // eslint-disable-next-line no-undef
+    let info = await $ipc.invoke('fishpi.info.get');
     this.$root.info = info;
   }
 }
