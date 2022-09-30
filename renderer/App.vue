@@ -1,6 +1,7 @@
 <template>
-  <div id="app" v-if="$root.info">
-    <router-view/>
+  <div id="app">
+    <router-view v-if="$root.info"/>
+    <div v-if="!$root.info">载入用户信息失败，请尝试切换页面重新载入。</div>
   </div>
 </template>
 
