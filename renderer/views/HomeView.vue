@@ -2,7 +2,11 @@
   <div class="layout">
     <div class="login" v-if="!isLogin">
       <div class="content form">
-        <p>准备好冒险了吗？{{$root.info.userNickname}}</p>
+        <p>准备好冒险了吗？{{$root.info?.userNickname || ''}}</p>
+        <p class="form-item" v-if="!$root.info" style="padding-right: 30px">
+          <label for="username" class="fa fa-user form-icon"></label>
+          <input type="text" @keydown.enter="login" id="username" placeholder="摸鱼派用户名" class="form-input" v-model="userName"/>
+        </p>
         <p class="form-item">
           <label for="password" class="fa fa-lock form-icon"></label>
           <input type="password" @keydown.enter="login" id="password" placeholder="小冰游戏密码" class="form-input" v-model="passwd"/>
@@ -37,6 +41,7 @@ export default {
     return {
       isLogin: false,
       rws: null,
+      userName: this.$root.info?.userName || '',
       passwd: '',
       msg: '',
       messages: []
@@ -48,7 +53,8 @@ export default {
     },
   },
   mounted() {
-    this.Init()
+    this.Init();
+    if (!this.$root.info) return;
     console.dir(this.$root.cookies[this.$root.info.oId])
     if (this.ck) this.isLogin = true;
     this.send({
@@ -97,21 +103,45 @@ export default {
           break;
       }
     },
-    login() {
+    setUser() {
+      if (this.$root.info) {
+        this.send({
+          ck: this.ck,
+          type: "setUser",
+          uid: this.$root.info.oId,
+          user: this.$root.info.userName,
+        })
+      }
+      else if(this.userName) {
+        return fetch(`http://cors.librejo.cn/?url=https://fishpi.cn/user/${this.userName}`).then(res => res.json()).then(res => {
+          if (!res.code) {
+            this.$root.info = res;
+            return this.send({
+              ck: this.ck,
+              type: "setUser",
+              uid: this.$root.info.oId,
+              user: this.$root.info.userName,
+            })
+          }
+        })
+      }
+    },
+    async login() {
+      if (!this.$root.info) await this.setUser();
       this.send({
         ck: null,
         type: "login",
         msg: `登录 ${this.passwd}`,
       })
     },
-    send(data) {
-      this.rws.send(JSON.stringify(data))
+    async send(data) {
+      await this.rws.send(JSON.stringify(data))
       if (data.type == "gameMsg") this.messages.unshift({...data, isSend: true, index: this.messages.length});
     },
     sendMessage() {
       this.send({
-        ck: this.ck,
-        type: 'gameMsg',
+        ck: this.msg.startsWith('登录') ? null : (this.ck || null),
+        type: this.msg.startsWith('登录') ? 'login' : 'gameMsg',
         msg: this.msg
       })
       this.msg = '';
