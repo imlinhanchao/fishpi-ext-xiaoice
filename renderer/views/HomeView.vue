@@ -41,7 +41,7 @@ export default {
     return {
       isLogin: false,
       rws: null,
-      userName: this.$root.info?.userName || '',
+      userName: this.$root.info?.userName || localStorage.getItem('user', this.userName) || '',
       passwd: '',
       msg: '',
       messages: []
@@ -127,7 +127,10 @@ export default {
       }
     },
     async login() {
-      if (!this.$root.info) await this.setUser();
+      if (!this.$root.info) {
+        this.userName && localStorage.setItem('user', this.userName);
+        await this.setUser();
+      }
       this.send({
         ck: null,
         type: "login",
@@ -140,7 +143,7 @@ export default {
     },
     sendMessage() {
       this.send({
-        ck: this.msg.startsWith('登录') ? null : (this.ck || null),
+        ck: this.ck || null,
         type: this.msg.startsWith('登录') ? 'login' : 'gameMsg',
         msg: this.msg
       })

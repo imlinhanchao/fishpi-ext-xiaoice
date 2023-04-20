@@ -1,9 +1,12 @@
 /* eslint-disable no-unused-vars */
 const path = require('path');
+const Fishpi = require('fishpi').default;
 
+const fishpi = new Fishpi();
 function activate(context, electron) {
     context.on('login', function(token) {
         console.dir(token);
+        fishpi.setToken(token);
         login(context);
     })
 
@@ -19,7 +22,7 @@ function activate(context, electron) {
         switch(command) {
             case 'fishpi.info.get':
             {
-                let rsp = await context.fishpi.account.info();
+                let rsp = await fishpi.account.info();
                 console.dir(rsp)
                 callback(rsp.data);
                 break;

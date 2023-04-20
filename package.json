@@ -18,13 +18,14 @@
     "icon": "public/icon.png"
   },
   "dependencies": {
+    "fishpi": "^0.0.20"
+  },
+  "devDependencies": {
     "core-js": "^3.8.3",
     "reconnecting-websocket": "^4.4.0",
     "vue": "^2.6.14",
     "vue-router": "^3.5.1",
-    "vuex": "^3.6.2"
-  },
-  "devDependencies": {
+    "vuex": "^3.6.2",
     "@babel/core": "^7.12.16",
     "@babel/eslint-parser": "^7.12.16",
     "@vue/cli-plugin-babel": "~5.0.0",
