@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <router-view/>
+    <router-view v-if="this.$root.info"/>
   </div>
 </template>
 
@@ -9,7 +9,7 @@ export default {
   async mounted() {
     // eslint-disable-next-line no-undef
     let info = await $ipc?.invoke('fishpi.info.get');
-    this.$root.info = info;
+    this.$root.info = info || {};
     this.loaded = true;
   },
   data() {

@@ -54,7 +54,7 @@ export default {
   },
   mounted() {
     this.Init();
-    if (!this.$root.info) return;
+    if (!this.$root.info.userName) return;
     console.dir(this.$root.cookies[this.$root.info.oId])
     if (this.ck) this.isLogin = true;
     this.send({
@@ -127,7 +127,7 @@ export default {
       }
     },
     async login() {
-      if (!this.$root.info) {
+      if (!this.$root.info.userName) {
         this.userName && localStorage.setItem('user', this.userName);
         await this.setUser();
       }
