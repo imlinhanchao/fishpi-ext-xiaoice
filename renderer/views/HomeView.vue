@@ -3,7 +3,7 @@
     <div class="login" v-if="!isLogin">
       <div class="content form">
         <p>准备好冒险了吗？{{$root.info?.userNickname || ''}}</p>
-        <p class="form-item" v-if="!$root.info" style="padding-right: 30px">
+        <p class="form-item" v-if="!$root.info.userNickname" style="padding-right: 30px">
           <label for="username" class="fa fa-user form-icon"></label>
           <input type="text" @keydown.enter="login" id="username" placeholder="摸鱼派用户名" class="form-input" v-model="userName"/>
         </p>
@@ -48,21 +48,19 @@ export default {
     }
   },
   computed: {
+    info () {
+      return this.$root.info;
+    },
     ck() {
       return this.$root.cookies[this.$root.info.oId] ? this.$root.cookies[this.$root.info.oId].ck : null;
     },
   },
   mounted() {
     this.Init();
-    if (!this.$root.info.userName) return;
+    if (!this.$root.info.oId) return;
     console.dir(this.$root.cookies[this.$root.info.oId])
     if (this.ck) this.isLogin = true;
-    this.send({
-      ck: this.ck,
-      type: "setUser",
-      uid: this.$root.info.oId,
-      user: this.$root.info.userName,
-    })
+    this.setUser();
   },
   methods: {
     Init() {
@@ -93,6 +91,7 @@ export default {
             passwd: this.passwd
           });
           localStorage.setItem('cks', JSON.stringify(this.$root.cookies));
+          localStorage.setItem('lastInfo', JSON.stringify(this.$root.info));
           this.messages = [];
           this.messages.push(msg);
           this.isLogin = true;
@@ -104,7 +103,7 @@ export default {
       }
     },
     setUser() {
-      if (this.$root.info) {
+      if (this.$root.info.userName) {
         this.send({
           ck: this.ck,
           type: "setUser",
@@ -127,10 +126,8 @@ export default {
       }
     },
     async login() {
-      if (!this.$root.info.userName) {
-        this.userName && localStorage.setItem('user', this.userName);
-        await this.setUser();
-      }
+      this.userName && localStorage.setItem('user', this.userName);
+      await this.setUser();
       this.send({
         ck: null,
         type: "login",

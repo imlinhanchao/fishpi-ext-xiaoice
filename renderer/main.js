@@ -10,7 +10,7 @@ new Vue({
   router,
   store,
   data: {
-    info: null,
+    info: JSON.parse(localStorage.getItem('lastInfo') || '{}'),
     cookies: JSON.parse(localStorage.getItem("cks") ||'{}')
   },
   mounted() {
