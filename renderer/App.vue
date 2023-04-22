@@ -5,11 +5,16 @@
 </template>
 
 <script>
+import Fishpi from 'fishpi'
 export default {
   async mounted() {
     // eslint-disable-next-line no-undef
-    let info = await $ipc?.invoke('fishpi.info.get');
-    this.$root.info = info || {};
+    let key = await $ipc?.invoke('fishpi.info.token');
+    this.$root.key = key || '';
+    if  (this.$root.key) {
+      this.$root.fishpi = new Fishpi(this.$root.key);
+      this.$root.info = (await this.$root.fishpi.account.info()).data;
+    }
     this.loaded = true;
   },
   data() {

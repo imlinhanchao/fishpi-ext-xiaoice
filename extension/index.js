@@ -1,17 +1,15 @@
 /* eslint-disable no-unused-vars */
 const path = require('path');
-const Fishpi = require('fishpi').default;
 
-const fishpi = new Fishpi();
+let apiKey = '';
 function activate(context, electron) {
     context.on('login', function(token) {
-        console.dir(token);
-        fishpi.setToken(token);
+        apiKey = token;
         login(context);
     })
 
     context.on('logout', () => {
-        console.dir('user logout')
+        apiKey = ''
     })
 
     context.on('quit', () => {
@@ -20,11 +18,9 @@ function activate(context, electron) {
 
     context.on('command', async (command, args, callback) => {
         switch(command) {
-            case 'fishpi.info.get':
+            case 'fishpi.info.token':
             {
-                let rsp = await fishpi.account.info();
-                console.dir(rsp)
-                callback(rsp.data);
+                callback(apiKey);
                 break;
             }
         }

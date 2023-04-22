@@ -60,7 +60,7 @@ export default {
     if (!this.$root.info.oId) return;
     console.dir(this.$root.cookies[this.$root.info.oId])
     if (this.ck) this.isLogin = true;
-    this.setUser();
+    setTimeout(() => this.setUser(), 500);
   },
   methods: {
     Init() {
@@ -127,7 +127,6 @@ export default {
     },
     async login() {
       this.userName && localStorage.setItem('user', this.userName);
-      await this.setUser();
       this.send({
         ck: null,
         type: "login",

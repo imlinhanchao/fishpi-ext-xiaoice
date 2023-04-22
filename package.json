@@ -18,9 +18,9 @@
     "icon": "public/icon.png"
   },
   "dependencies": {
-    "fishpi": "^0.0.20"
   },
   "devDependencies": {
+    "fishpi": "^0.0.20",
     "core-js": "^3.8.3",
     "reconnecting-websocket": "^4.4.0",
     "vue": "^2.6.14",
